@@ -38,7 +38,7 @@ namespace Proxies.Caching.Tests
         {
         }
 
-        protected T Resolved<T>()
+        protected T Resolve<T>()
         {
             return _scope.Resolve<T>();
         }
