@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AutoFixture;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.DependencyInjection;
+using NSubstitute;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -15,6 +18,7 @@ namespace Proxies.Caching.Tests
         protected override void CustomizeServices(IServiceCollection services)
         {
             services.AddCaching();
+
         }
 
         [Fact]
@@ -38,9 +42,20 @@ namespace Proxies.Caching.Tests
         [Fact]
         public async Task SimpleInvalidation()
         {
-            var cached = Resolve<ICacheInvalidatorProxy<IA>>();
+            // Arrange
+            var invalidator = Resolve<ICacheInvalidatorProxy<IA>>();
+            string expected = Fixture.Create<string>();
+            string key = Resolve<IKeyGenerator>().GenerateKey(typeof(IA).GetMethod(nameof(IA.GetAsync)));
 
-            string result = await cached.Value.GetAsync();
+            Resolve<IA>().GetAsync().Returns(expected);
+
+            // Act
+            string result = await invalidator.Value.GetAsync();
+
+            // Assert
+            Assert.Null(result);
+
+            await Resolve<IDistributedCache>().Received(1).RemoveAsync(key);
         }
 
         [Fact]
