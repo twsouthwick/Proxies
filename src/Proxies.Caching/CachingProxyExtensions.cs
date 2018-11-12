@@ -14,8 +14,8 @@ namespace Proxies.Caching
 
             services.AddSingleton<IKeyGenerator, KeyGenerator>();
 
-            services.AddScoped(typeof(ICachedProxy<>), typeof(CachedProxy<>));
-            services.AddScoped(typeof(ICacheInvalidatorProxy<>), typeof(CacheInvalidatorProxy<>));
+            services.AddSingleton(typeof(ICachedProxy<>), typeof(CachedProxy<>));
+            services.AddSingleton(typeof(ICacheInvalidatorProxy<>), typeof(CacheInvalidatorProxy<>));
         }
     }
 }
