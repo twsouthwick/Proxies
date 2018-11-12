@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -42,10 +43,23 @@ namespace Proxies.Caching.Tests
             string result = await cached.Value.GetAsync();
         }
 
+        [Fact]
+        public async Task InvalidationOnNonCacheableMethodThrows()
+        {
+            var invalidator = Resolve<ICacheInvalidatorProxy<IB>>();
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() => invalidator.Value.NotCachedAsync());
+        }
+
         public interface IA
         {
             [Cached]
             Task<string> GetAsync();
+        }
+
+        public interface IB
+        {
+            Task<string> NotCachedAsync();
         }
     }
 }

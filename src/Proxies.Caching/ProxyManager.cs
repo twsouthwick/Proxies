@@ -29,7 +29,15 @@ namespace Proxies.Caching
         public T CreateInvalidatorProxy<T>()
             where T : class
         {
-            return _generator.CreateInterfaceProxyWithoutTarget<T>(_options, _invalidatorInterceptor.ToInterceptor());
+            var target = CreateExceptionThrowingProxy<T>();
+
+            return _generator.CreateInterfaceProxyWithTargetInterface<T>(target, _options, _invalidatorInterceptor.ToInterceptor());
+        }
+
+        private T CreateExceptionThrowingProxy<T>()
+            where T : class
+        {
+            return _generator.CreateInterfaceProxyWithoutTarget<T>(CacheProxyExceptionInterceptor.Instance);
         }
     }
 }
