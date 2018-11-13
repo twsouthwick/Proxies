@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Proxies.Caching
 {
-    internal class ReadonlyProxyGenerationHook : IProxyGenerationHook
+    internal class CachedProxyGenerationHook : IProxyGenerationHook
     {
-        private readonly ILogger<ReadonlyProxyGenerationHook> _logger;
+        private readonly ILogger<CachedProxyGenerationHook> _logger;
 
-        public ReadonlyProxyGenerationHook(ILogger<ReadonlyProxyGenerationHook> logger)
+        public CachedProxyGenerationHook(ILogger<CachedProxyGenerationHook> logger)
         {
             _logger = logger;
         }

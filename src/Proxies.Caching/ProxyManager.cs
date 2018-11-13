@@ -12,7 +12,7 @@ namespace Proxies.Caching
         public ProxyManager(
            CachingInterceptor interceptor,
            CacheInvalidatorInterceptor invalidatorInterceptor,
-           ReadonlyProxyGenerationHook hook)
+           CachedProxyGenerationHook hook)
         {
             _cachingInterceptor = interceptor;
             _invalidatorInterceptor = invalidatorInterceptor;

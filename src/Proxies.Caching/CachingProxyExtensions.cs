@@ -7,7 +7,7 @@ namespace Proxies.Caching
         public static void AddCaching(this IServiceCollection services)
         {
             services.AddSingleton<ProxyManager>();
-            services.AddSingleton<ReadonlyProxyGenerationHook>();
+            services.AddSingleton<CachedProxyGenerationHook>();
 
             services.AddSingleton<CachingInterceptor>();
             services.AddSingleton<CacheInvalidatorInterceptor>();
