@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proxies.Caching
 {
-    internal class CachingInterceptor : AsyncInterceptorBase
+    internal class CachingInterceptor : AsyncInterceptor
     {
         private readonly IKeyGenerator _keyGenerator;
         private readonly IDistributedCache _cache;
@@ -25,12 +25,7 @@ namespace Proxies.Caching
             _logger = logger;
         }
 
-        protected override Task InterceptAsync(IInvocation invocation, Func<IInvocation, Task> proceed)
-        {
-            return proceed(invocation);
-        }
-
-        protected override async Task<TResult> InterceptAsync<TResult>(IInvocation invocation, Func<IInvocation, Task<TResult>> proceed)
+        protected override async Task<TResult> InterceptAsync<TResult>(IInvocation invocation, Func<Task<TResult>> proceed)
         {
             string key = _keyGenerator.GenerateKey(invocation.Method, invocation.Arguments);
 
@@ -40,7 +35,7 @@ namespace Proxies.Caching
             {
                 _logger.LogTrace("Cached value unavailable for {Method}", invocation.Method);
 
-                var value = await proceed(invocation);
+                var value = await proceed();
 
                 _logger.LogTrace("Setting cached value for {Method}", invocation.Method);
                 await _cache.SetAsync(key, _serializer.Serialize(value));

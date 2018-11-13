@@ -23,7 +23,7 @@ namespace Proxies.Caching
         public T CreateCachingProxy<T>(T target)
             where T : class
         {
-            return _generator.CreateInterfaceProxyWithTargetInterface(target, _options, _cachingInterceptor.ToInterceptor());
+            return _generator.CreateInterfaceProxyWithTargetInterface(target, _options, _cachingInterceptor);
         }
 
         public T CreateInvalidatorProxy<T>()
@@ -31,7 +31,7 @@ namespace Proxies.Caching
         {
             var target = CreateExceptionThrowingProxy<T>();
 
-            return _generator.CreateInterfaceProxyWithTargetInterface<T>(target, _options, _invalidatorInterceptor.ToInterceptor());
+            return _generator.CreateInterfaceProxyWithTargetInterface<T>(target, _options, _invalidatorInterceptor);
         }
 
         private T CreateExceptionThrowingProxy<T>()

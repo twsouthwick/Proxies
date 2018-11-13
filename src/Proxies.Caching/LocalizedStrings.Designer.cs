@@ -68,5 +68,14 @@ namespace Proxies.Caching {
                 return ResourceManager.GetString("MethodNotCached", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only methods that return a Task&lt;T&gt; can be cached.
+        /// </summary>
+        internal static string OnlyTaskT {
+            get {
+                return ResourceManager.GetString("OnlyTaskT", resourceCulture);
+            }
+        }
     }
 }

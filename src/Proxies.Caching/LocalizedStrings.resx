@@ -120,4 +120,7 @@
   <data name="MethodNotCached" xml:space="preserve">
     <value>Method '{0}' is not cached</value>
   </data>
+  <data name="OnlyTaskT" xml:space="preserve">
+    <value>Only methods that return a Task&lt;T&gt; can be cached</value>
+  </data>
 </root>
