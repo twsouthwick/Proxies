@@ -18,7 +18,6 @@ namespace Proxies.Caching.Tests
         protected override void CustomizeServices(IServiceCollection services)
         {
             services.AddCaching();
-
         }
 
         [Fact]
@@ -48,6 +47,56 @@ namespace Proxies.Caching.Tests
             string key = Resolve<IKeyGenerator>().GenerateKey(typeof(IA).GetMethod(nameof(IA.GetAsync)));
 
             Resolve<IA>().GetAsync().Returns(expected);
+
+            // Act
+            string result = await invalidator.Value.GetAsync();
+
+            // Assert
+            Assert.Null(result);
+
+            await Resolve<IDistributedCache>().Received(1).RemoveAsync(key);
+        }
+
+        [Fact]
+        public async Task InvalidationWithYield()
+        {
+            // Arrange
+            var invalidator = Resolve<ICacheInvalidatorProxy<IA>>();
+            string expected = Fixture.Create<string>();
+            string key = Resolve<IKeyGenerator>().GenerateKey(typeof(IA).GetMethod(nameof(IA.GetAsync)));
+
+            async Task<string> YieldAsync()
+            {
+                await Task.Yield();
+                return expected;
+            }
+
+            Resolve<IA>().GetAsync().Returns(_ => YieldAsync());
+
+            // Act
+            string result = await invalidator.Value.GetAsync();
+
+            // Assert
+            Assert.Null(result);
+
+            await Resolve<IDistributedCache>().Received(1).RemoveAsync(key);
+        }
+
+        [Fact]
+        public async Task InvalidationWithDelay()
+        {
+            // Arrange
+            var invalidator = Resolve<ICacheInvalidatorProxy<IA>>();
+            string expected = Fixture.Create<string>();
+            string key = Resolve<IKeyGenerator>().GenerateKey(typeof(IA).GetMethod(nameof(IA.GetAsync)));
+
+            async Task<string> DelayAsync()
+            {
+                await Task.Delay(100);
+                return expected;
+            }
+
+            Resolve<IA>().GetAsync().Returns(_ => DelayAsync());
 
             // Act
             string result = await invalidator.Value.GetAsync();
