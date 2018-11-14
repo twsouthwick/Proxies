@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Proxies.Caching\Proxies.Caching.csproj" />
-    <ProjectReference Include="..\Proxies.Caching.Tests.Utilities\Proxies.Caching.Tests.Utilities.csproj" />
+    <ProjectReference Include="..\Proxies.Tests.Utilities\Proxies.Tests.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
