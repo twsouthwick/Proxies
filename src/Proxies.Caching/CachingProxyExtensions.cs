@@ -1,7 +1,7 @@
 ﻿using Castle.DynamicProxy;
-using Microsoft.Extensions.DependencyInjection;
+using Proxies.Caching;
 
-namespace Proxies.Caching
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class CachingProxyExtensions
     {

@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xunit;
 
-namespace Proxies.Caching.Tests
+namespace Proxies
 {
     public abstract class TestBase : IClassFixture<TestScopeProvider>, IDisposable
     {

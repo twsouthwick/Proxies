@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Proxies.Caching.Tests
+namespace Proxies
 {
     public sealed class TestScopeProvider : IDisposable
     {

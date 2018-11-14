@@ -6,6 +6,7 @@ namespace Proxies.Translation
     {
         public static void AddTranslation(this IServiceCollection services)
         {
+            services.AddSingleton(typeof(ITranslatorFactory<>), typeof(TranslatorFactory<>));
         }
     }
 }
