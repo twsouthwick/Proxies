@@ -7,12 +7,13 @@ namespace Proxies.Caching
     {
         public CacheInvalidatorProxy(
             ProxyGenerator generator,
-            CacheInvalidatorInterceptor interceptor,
+            CacheInvalidatorInterceptor invalidatorInterceptor,
+            CacheProxyExceptionInterceptor exceptionInterceptor,
             CachedProxyGenerationOptions options)
         {
-            var throwing = generator.CreateInterfaceProxyWithoutTarget<T>(CacheProxyExceptionInterceptor.Instance);
+            var throwing = generator.CreateInterfaceProxyWithoutTarget<T>(exceptionInterceptor);
 
-            Value = generator.CreateInterfaceProxyWithTargetInterface<T>(throwing, options, interceptor);
+            Value = generator.CreateInterfaceProxyWithTargetInterface(throwing, options, invalidatorInterceptor);
         }
 
         public T Value { get; }

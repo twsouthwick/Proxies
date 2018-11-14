@@ -13,6 +13,7 @@ namespace Proxies.Caching
 
             services.AddSingleton<CachingInterceptor>();
             services.AddSingleton<CacheInvalidatorInterceptor>();
+            services.AddSingleton<CacheProxyExceptionInterceptor>();
 
             services.AddSingleton<IKeyGenerator, KeyGenerator>();
 
