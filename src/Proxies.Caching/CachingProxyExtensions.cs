@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Castle.DynamicProxy;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Proxies.Caching
 {
@@ -6,7 +7,8 @@ namespace Proxies.Caching
     {
         public static void AddCaching(this IServiceCollection services)
         {
-            services.AddSingleton<ProxyManager>();
+            services.AddSingleton(_ => new ProxyGenerator());
+            services.AddSingleton<CachedProxyGenerationOptions>();
             services.AddSingleton<CachedProxyGenerationHook>();
 
             services.AddSingleton<CachingInterceptor>();
