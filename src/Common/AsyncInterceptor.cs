@@ -3,7 +3,7 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Proxies.Caching
+namespace Proxies
 {
     internal abstract class AsyncInterceptor : IInterceptor
     {
@@ -21,7 +21,7 @@ namespace Proxies.Caching
             }
             else
             {
-                throw new InvalidOperationException(LocalizedStrings.OnlyTaskT);
+                throw new InvalidOperationException();
             }
         }
 
