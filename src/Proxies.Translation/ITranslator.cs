@@ -4,6 +4,6 @@ namespace Proxies.Translation
 {
     public interface ITranslator
     {
-        Task<string> TranslateAsync(string input, string language);
+        Task<string> TranslateAsync(string input);
     }
 }

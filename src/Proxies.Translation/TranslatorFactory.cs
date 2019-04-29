@@ -16,11 +16,11 @@ namespace Proxies.Translation
 
         public bool IsEmpty => _translatable.Properties.Length == 0;
 
-        public async Task TranslateAsync(T instance, string language)
+        public async Task TranslateAsync(T instance)
         {
             foreach (var property in _translatable.Properties)
             {
-                property.Setter(instance, await _translator.TranslateAsync(property.Getter(instance), language));
+                property.Setter(instance, await _translator.TranslateAsync(property.Getter(instance)));
             }
         }
     }

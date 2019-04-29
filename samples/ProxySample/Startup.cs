@@ -26,6 +26,7 @@ namespace ProxySample
         {
             services.AddTranslation();
             services.AddSingleton<ITranslator, Base64Translator>();
+            services.AddHttpContextAccessor();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

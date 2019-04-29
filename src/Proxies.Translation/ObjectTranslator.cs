@@ -17,18 +17,18 @@ namespace Proxies.Translation
 
         public bool IsEmpty => _factory.IsEmpty;
 
-        public async Task<object> TranslateAsync(object obj, string language)
+        public async Task<object> TranslateAsync(object obj)
         {
             if (obj is T t)
             {
-                await _factory.TranslateAsync((T)obj, language);
+                await _factory.TranslateAsync((T)obj);
                 return t;
             }
             else if (obj is IEnumerable<T> list)
             {
                 return await Task.WhenAll(list.Select(async i =>
                 {
-                    await _factory.TranslateAsync(i, language);
+                    await _factory.TranslateAsync(i);
                     return i;
                 }));
             }

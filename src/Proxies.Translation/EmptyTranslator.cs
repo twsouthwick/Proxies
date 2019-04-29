@@ -4,6 +4,6 @@ namespace Proxies.Translation
 {
     internal class EmptyTranslator : ITranslator
     {
-        public Task<string> TranslateAsync(string input, string language) => Task.FromResult(input);
+        public Task<string> TranslateAsync(string input) => Task.FromResult(input);
     }
 }

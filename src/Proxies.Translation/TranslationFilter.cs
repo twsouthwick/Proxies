@@ -25,7 +25,7 @@ namespace Proxies.Translation
         {
             if (result is ObjectResult objResult && _translators.GetOrAdd(objResult.DeclaredType, CreateTranslator, services) is IObjectTranslator translator)
             {
-                objResult.Value = await translator.TranslateAsync(objResult.Value, string.Empty).ConfigureAwait(false);
+                objResult.Value = await translator.TranslateAsync(objResult.Value).ConfigureAwait(false);
             }
         }
 
