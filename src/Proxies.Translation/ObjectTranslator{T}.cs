@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,14 +11,16 @@ namespace Proxies.Translation
     {
         private readonly TranslatableObject<T> _translatable;
         private readonly ITranslator _translator;
+        private readonly ILogger<ObjectTranslator<T>> _logger;
 
-        public ObjectTranslator(ITranslator translator)
+        public ObjectTranslator(ITranslator translator, ILogger<ObjectTranslator<T>> logger)
         {
             _translator = translator;
+            _logger = logger;
             _translatable = new TranslatableObject<T>();
         }
 
-        public bool IsEmpty => _translatable.Properties.Length == 0;
+        public int Count => _translatable.Properties.Length;
 
         public async Task<object> TranslateAsync(object obj)
         {
@@ -35,6 +38,7 @@ namespace Proxies.Translation
                 }));
             }
 
+            _logger.LogError("Unknown object {UnknownType}; Expected {Type}.", obj.GetType(), typeof(T));
             throw new InvalidOperationException("Must be of type T or IEnumerable<T>");
         }
 

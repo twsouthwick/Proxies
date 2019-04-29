@@ -6,6 +6,6 @@ namespace Proxies.Translation
     {
         Task<object> TranslateAsync(object obj);
 
-        bool IsEmpty { get; }
+        int Count { get; }
     }
 }

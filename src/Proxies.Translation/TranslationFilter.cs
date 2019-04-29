@@ -4,12 +4,20 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 
 namespace Proxies.Translation
 {
     internal class TranslationFilter : IAsyncResultFilter
     {
-        private readonly ConcurrentDictionary<Type, IObjectTranslator> _translators = new ConcurrentDictionary<Type, IObjectTranslator>();
+        private readonly ConcurrentDictionary<Type, IObjectTranslator> _translators;
+        private readonly ILogger<TranslationFilter> _logger;
+
+        public TranslationFilter(ILogger<TranslationFilter> logger)
+        {
+            _translators = new ConcurrentDictionary<Type, IObjectTranslator>();
+            _logger = logger;
+        }
 
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
@@ -34,7 +42,18 @@ namespace Proxies.Translation
             var expectedType = typeof(ObjectTranslator<>).MakeGenericType(UnwrapType(type));
             var translator = (IObjectTranslator)services.GetService(expectedType);
 
-            return translator.IsEmpty ? null : translator;
+            if (translator.Count > 0)
+            {
+                _logger.LogInformation("Create object translator for '{Type}' with {PropertyCount} translatable properties", type, translator.Count);
+
+                return translator;
+            }
+            else
+            {
+                _logger.LogDebug("No translatable properties on '{Type}'", type);
+
+                return null;
+            }
         }
 
         private Type UnwrapType(Type declared)
