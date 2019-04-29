@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
@@ -23,17 +24,17 @@ namespace Proxies.Translation
         {
             if (IsSuccess(context.HttpContext.Response.StatusCode))
             {
-                await UpdateValue(context.Result, context.HttpContext.RequestServices);
+                await UpdateValue(context.Result, context.HttpContext);
             }
 
             await next();
         }
 
-        private async Task UpdateValue(IActionResult result, IServiceProvider services)
+        private async Task UpdateValue(IActionResult result, HttpContext context)
         {
-            if (result is ObjectResult objResult && _translators.GetOrAdd(objResult.DeclaredType, CreateTranslator, services) is IObjectTranslator translator)
+            if (result is ObjectResult objResult && _translators.GetOrAdd(objResult.DeclaredType, CreateTranslator, context.RequestServices) is IObjectTranslator translator)
             {
-                objResult.Value = await translator.TranslateAsync(objResult.Value).ConfigureAwait(false);
+                objResult.Value = await translator.TranslateAsync(objResult.Value, context.RequestAborted).ConfigureAwait(false);
             }
         }
 

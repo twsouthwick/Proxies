@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Proxies.Translation
 {
     public interface ITranslator
     {
-        Task<string> TranslateAsync(string input);
+        Task<string> TranslateAsync(string input, CancellationToken token);
     }
 }
