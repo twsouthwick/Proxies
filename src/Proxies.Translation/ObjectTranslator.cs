@@ -15,15 +15,20 @@ namespace Proxies.Translation
             _factory = factory;
         }
 
-        public Task TranslateAsync(object obj, string language)
+        public async Task<object> TranslateAsync(object obj, string language)
         {
             if (obj is T t)
             {
-                return _factory.TranslateAsync((T)obj, language);
+                await _factory.TranslateAsync((T)obj, language);
+                return t;
             }
             else if (obj is IEnumerable<T> list)
             {
-                return Task.WhenAll(list.Select(i => _factory.TranslateAsync(i, language)));
+                return await Task.WhenAll(list.Select(async i =>
+                {
+                    await _factory.TranslateAsync(i, language);
+                    return i;
+                }));
             }
 
             throw new InvalidOperationException("Must be of type T or IEnumerable<T>");

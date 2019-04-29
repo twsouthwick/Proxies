@@ -25,7 +25,7 @@ namespace Proxies.Translation
                 var expectedType = typeof(ObjectTranslator<>).MakeGenericType(UnwrapType(objResult));
                 var translator = (IObjectTranslator)services.GetService(expectedType);
 
-                await translator.TranslateAsync(objResult.Value, string.Empty).ConfigureAwait(false);
+                objResult.Value = await translator.TranslateAsync(objResult.Value, string.Empty).ConfigureAwait(false);
             }
         }
 
