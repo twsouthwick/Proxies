@@ -6,7 +6,7 @@ namespace Proxies.Translation
 {
     public static class DependencyExtensions
     {
-        public static void AddTranslation(this IServiceCollection services)
+        public static TranslationBuilder AddTranslation(this IServiceCollection services)
         {
             // Instance of ObjectTranslator<> are retrieved and cached within the filter, so no need for the DI system to cache.
             services.AddTransient(typeof(ObjectTranslator<>));
@@ -16,6 +16,8 @@ namespace Proxies.Translation
             services.AddTransient<TranslationResultFilter>();
 
             services.AddSingleton<ITranslator, EmptyTranslator>();
+
+            return new TranslationBuilder(services);
         }
     }
 }

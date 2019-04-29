@@ -24,8 +24,9 @@ namespace ProxySample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTranslation();
-            services.AddSingleton<ITranslator, Base64Translator>();
+            services.AddTranslation()
+                .AddTranslator<Base64Translator>();
+
             services.AddHttpContextAccessor();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
