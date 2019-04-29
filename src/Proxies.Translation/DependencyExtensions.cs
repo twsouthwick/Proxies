@@ -10,7 +10,7 @@ namespace Proxies.Translation
         {
             services.AddSingleton(typeof(ObjectTranslator<>));
             services.AddTransient<IPostConfigureOptions<MvcOptions>, TranslationMvcOptions>();
-            services.AddSingleton<TranslationFilter>();
+            services.AddSingleton<TranslationResultFilter>();
             services.AddSingleton<ITranslator, EmptyTranslator>();
         }
     }

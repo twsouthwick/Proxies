@@ -9,12 +9,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Proxies.Translation
 {
-    internal class TranslationFilter : IAsyncResultFilter
+    internal class TranslationResultFilter : IAsyncResultFilter
     {
         private readonly ConcurrentDictionary<Type, IObjectTranslator> _translators;
-        private readonly ILogger<TranslationFilter> _logger;
+        private readonly ILogger<TranslationResultFilter> _logger;
 
-        public TranslationFilter(ILogger<TranslationFilter> logger)
+        public TranslationResultFilter(ILogger<TranslationResultFilter> logger)
         {
             _translators = new ConcurrentDictionary<Type, IObjectTranslator>();
             _logger = logger;
