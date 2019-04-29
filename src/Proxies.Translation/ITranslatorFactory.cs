@@ -1,8 +1,10 @@
-﻿namespace Proxies.Translation
+﻿using System.Threading.Tasks;
+
+namespace Proxies.Translation
 {
     public interface ITranslatorFactory<T>
         where T : class
     {
-        T CreateTranslator(string language);
+        Task TranslateAsync(T instance, string language);
     }
 }

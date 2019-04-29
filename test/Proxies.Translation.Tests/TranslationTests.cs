@@ -17,25 +17,25 @@ namespace Proxies.Translation.Tests
             services.AddTranslation();
         }
 
-        [Fact]
-        public void InvalidOperationThrown()
-        {
-            Assert.Throws<InvalidOperationException>(() => Resolve<ITranslatorFactory<IA>>().CreateTranslator(Fixture.Create<string>()));
-        }
+        //[Fact]
+        //public void InvalidOperationThrown()
+        //{
+        //    Assert.Throws<InvalidOperationException>(() => Resolve<ITranslatorFactory<IA>>().CreateTranslator(Fixture.Create<string>()));
+        //}
 
-        [Fact]
-        public void ArgumentNullCheck()
-        {
-            Assert.Throws<ArgumentNullException>(() => Resolve<ITranslatorFactory<IA>>().CreateTranslator(null));
-        }
+        //[Fact]
+        //public void ArgumentNullCheck()
+        //{
+        //    Assert.Throws<ArgumentNullException>(() => Resolve<ITranslatorFactory<IA>>().CreateTranslator(null));
+        //}
 
-        [Theory]
-        [InlineData("")]
-        [InlineData("  ")]
-        public void ArgumentOutOfRange(string language)
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Resolve<ITranslatorFactory<IA>>().CreateTranslator(language));
-        }
+        //[Theory]
+        //[InlineData("")]
+        //[InlineData("  ")]
+        //public void ArgumentOutOfRange(string language)
+        //{
+        //    Assert.Throws<ArgumentOutOfRangeException>(() => Resolve<ITranslatorFactory<IA>>().CreateTranslator(language));
+        //}
 
         public interface IA
         {

@@ -1,23 +1,25 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
 namespace Proxies.Translation
 {
     internal class TranslatorFactory<T> : ITranslatorFactory<T>
         where T : class
     {
-        public T CreateTranslator(string language)
+        private readonly TranslatableObject<T> _translatable;
+        private readonly ITranslator _translator;
+
+        public TranslatorFactory(ITranslator translator)
         {
-            if (language == null)
-            {
-                throw new ArgumentNullException(nameof(language));
-            }
+            _translator = translator;
+            _translatable = new TranslatableObject<T>();
+        }
 
-            if (string.IsNullOrWhiteSpace(language))
+        public async Task TranslateAsync(T instance, string language)
+        {
+            foreach (var property in _translatable.Properties)
             {
-                throw new ArgumentOutOfRangeException(nameof(language));
+                property.Setter(instance, await _translator.TranslateAsync(property.Getter(instance), language));
             }
-
-            throw new InvalidOperationException();
         }
     }
 }

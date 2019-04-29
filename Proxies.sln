@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2041
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proxies.Caching.Tests", "test\Proxies.Caching.Tests\Proxies.Caching.Tests.csproj", "{22E2D123-A09E-460E-82BE-88E4C5DB655B}"
 EndProject
@@ -19,9 +19,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proxies.Translation", "src\Proxies.Translation\Proxies.Translation.csproj", "{3E165F3C-ADE8-44CD-8FDA-0900E6FD33D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxies.Translation.Tests", "test\Proxies.Translation.Tests\Proxies.Translation.Tests.csproj", "{4D7FA884-C1EF-4C1C-BC47-38BF516030E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proxies.Translation.Tests", "test\Proxies.Translation.Tests\Proxies.Translation.Tests.csproj", "{4D7FA884-C1EF-4C1C-BC47-38BF516030E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proxies.Tests.Utilities", "test\Proxies.Tests.Utilities\Proxies.Tests.Utilities.csproj", "{DBDA7303-FFDE-4C8C-AAD7-20BB5A3A53D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{77B1D9A6-480E-4FBD-9CF3-3DAAAD72B822}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxySample", "samples\ProxySample\ProxySample.csproj", "{07468600-6F9C-49AA-828D-6998C17B688D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,10 @@ Global
 		{DBDA7303-FFDE-4C8C-AAD7-20BB5A3A53D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBDA7303-FFDE-4C8C-AAD7-20BB5A3A53D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBDA7303-FFDE-4C8C-AAD7-20BB5A3A53D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07468600-6F9C-49AA-828D-6998C17B688D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07468600-6F9C-49AA-828D-6998C17B688D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07468600-6F9C-49AA-828D-6998C17B688D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07468600-6F9C-49AA-828D-6998C17B688D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +67,7 @@ Global
 		{3E165F3C-ADE8-44CD-8FDA-0900E6FD33D3} = {CAC99539-E233-48DD-82C5-B468214D8F82}
 		{4D7FA884-C1EF-4C1C-BC47-38BF516030E2} = {DD56CF1E-A409-4748-A83F-CAB5AB06B07A}
 		{DBDA7303-FFDE-4C8C-AAD7-20BB5A3A53D1} = {DD56CF1E-A409-4748-A83F-CAB5AB06B07A}
+		{07468600-6F9C-49AA-828D-6998C17B688D} = {77B1D9A6-480E-4FBD-9CF3-3DAAAD72B822}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20C3FF05-EA07-4087-8221-7FABBF6C2924}
