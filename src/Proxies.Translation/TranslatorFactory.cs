@@ -14,6 +14,8 @@ namespace Proxies.Translation
             _translatable = new TranslatableObject<T>();
         }
 
+        public bool IsEmpty => _translatable.Properties.Length == 0;
+
         public async Task TranslateAsync(T instance, string language)
         {
             foreach (var property in _translatable.Properties)

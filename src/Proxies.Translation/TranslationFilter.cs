@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,8 @@ namespace Proxies.Translation
 {
     internal class TranslationFilter : IAsyncResultFilter
     {
+        private readonly ConcurrentDictionary<Type, IObjectTranslator> _translators = new ConcurrentDictionary<Type, IObjectTranslator>();
+
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
             if (IsSuccess(context.HttpContext.Response.StatusCode))
@@ -20,19 +23,22 @@ namespace Proxies.Translation
 
         private async Task UpdateValue(IActionResult result, IServiceProvider services)
         {
-            if (result is ObjectResult objResult)
+            if (result is ObjectResult objResult && _translators.GetOrAdd(objResult.DeclaredType, CreateTranslator, services) is IObjectTranslator translator)
             {
-                var expectedType = typeof(ObjectTranslator<>).MakeGenericType(UnwrapType(objResult));
-                var translator = (IObjectTranslator)services.GetService(expectedType);
-
                 objResult.Value = await translator.TranslateAsync(objResult.Value, string.Empty).ConfigureAwait(false);
             }
         }
 
-        private Type UnwrapType(ObjectResult result)
+        private IObjectTranslator CreateTranslator(Type type, IServiceProvider services)
         {
-            var declared = result.DeclaredType;
+            var expectedType = typeof(ObjectTranslator<>).MakeGenericType(UnwrapType(type));
+            var translator = (IObjectTranslator)services.GetService(expectedType);
 
+            return translator.IsEmpty ? null : translator;
+        }
+
+        private Type UnwrapType(Type declared)
+        {
             if (declared.IsGenericType && declared.GenericTypeArguments.Length == 1 && declared.GetGenericTypeDefinition() == typeof(IEnumerable<>))
             {
                 return declared.GenericTypeArguments[0];

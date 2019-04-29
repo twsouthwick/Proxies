@@ -15,6 +15,8 @@ namespace Proxies.Translation
             _factory = factory;
         }
 
+        public bool IsEmpty => _factory.IsEmpty;
+
         public async Task<object> TranslateAsync(object obj, string language)
         {
             if (obj is T t)

@@ -5,5 +5,7 @@ namespace Proxies.Translation
     internal interface IObjectTranslator
     {
         Task<object> TranslateAsync(object obj, string language);
+
+        bool IsEmpty { get; }
     }
 }
