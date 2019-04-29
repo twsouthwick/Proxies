@@ -26,28 +26,34 @@ namespace Proxies.Translation
         {
             if (obj is T t)
             {
-                await TranslateAsync((T)obj);
-                return t;
+                return await TranslateAsync(t);
             }
             else if (obj is IEnumerable<T> list)
             {
-                return await Task.WhenAll(list.Select(async i =>
-                {
-                    await TranslateAsync(i);
-                    return i;
-                }));
+                return await TranslateAsync(list);
             }
 
             _logger.LogError("Unknown object {UnknownType}; Expected {Type}.", obj.GetType(), typeof(T));
             throw new InvalidOperationException("Must be of type T or IEnumerable<T>");
         }
 
-        private async Task TranslateAsync(T instance)
+        private Task<T[]> TranslateAsync(IEnumerable<T> list)
+        {
+            return Task.WhenAll(list.Select(async i =>
+            {
+                await TranslateAsync(i);
+                return i;
+            }));
+        }
+
+        private async Task<T> TranslateAsync(T instance)
         {
             foreach (var property in _translatable.Properties)
             {
                 property.Setter(instance, await _translator.TranslateAsync(property.Getter(instance)));
             }
+
+            return instance;
         }
     }
 }
